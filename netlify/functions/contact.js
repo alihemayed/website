@@ -1,6 +1,6 @@
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 const CONTACT_TO = process.env.CONTACT_TO || 'hello@alihemayed.com.au';
-const CONTACT_FROM = process.env.CONTACT_FROM || 'Ali Hemayed Photography <onboarding@resend.dev>';
+const CONTACT_FROM = process.env.CONTACT_FROM || 'Ali Hemayed Photography <hello@alihemayed.com.au>';
 
 function parseBody(event) {
   const contentType = event.headers['content-type'] || event.headers['Content-Type'] || '';
