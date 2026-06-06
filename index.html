@@ -58,6 +58,7 @@ section{padding:7rem 3rem}
 .about-text h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:300;line-height:1.2;margin-bottom:2rem}
 .about-text h2 em{font-style:italic}
 .about-text p{font-size:.93rem;line-height:1.95;color:var(--mid);margin-bottom:1.2rem}
+.about-picture{display:block}
 .about-portrait{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top;display:block}
 
 /* PORTFOLIO */
@@ -431,7 +432,10 @@ footer a:hover{color:var(--gold)}
       <p>His work sits between commercial real estate and architectural storytelling: clean, intentional, and driven by light. Rather than relying on heavy styling or artificial lighting, he uses natural light and careful composition to shape a narrative within each space.</p>
       <p>Ali works with estate agents, builders, and designers who want more than documentation — they want clarity, mood, and intention. From fast-paced listings to refined, editorial-style shoots, his approach stays consistent: honest, restrained, and story-driven.</p>
     </div>
-    <img decoding="async" class="about-portrait" src="assets/site/image-056-6acb35ddb134.jpg" alt="Ali Hemayed — photographer" loading="lazy">
+    <picture class="about-picture">
+      <source media="(min-width: 901px)" srcset="assets/site/desktop-about-portrait.jpg">
+      <img decoding="async" class="about-portrait" src="assets/site/image-056-6acb35ddb134.jpg" alt="Ali Hemayed — photographer" loading="lazy">
+    </picture>
   </div>
 </section>
 
