@@ -128,7 +128,6 @@ section{padding:7rem 3rem}
 .contact-form input::placeholder,.contact-form textarea::placeholder{color:var(--light)}
 .contact-form input:focus,.contact-form textarea:focus{border-color:var(--gold)}
 .contact-form textarea{resize:vertical;min-height:130px}
-.form-status{min-height:1.4rem;text-align:center;font-size:.78rem;line-height:1.6;color:var(--mid)}
 .btn-submit{margin-top:.4rem;background:var(--charcoal);border:none;color:var(--gold);padding:1.1rem 3.5rem;font-family:'Jost',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;align-self:center;transition:background .3s,color .3s}
 .btn-submit:hover{background:var(--gold);color:var(--charcoal)}
 
@@ -456,7 +455,7 @@ footer a:hover{color:var(--gold)}
     <p class="section-label">Get in Touch</p>
     <h2>Let's work<br><em>together</em></h2>
     <p>Whether it's a fast-paced listing or a considered editorial shoot, get in touch to discuss your project or email us at: hello@alihemayed.com.au</p>
-    <form class="contact-form" id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <form class="contact-form" id="contact-form" name="contact" method="POST" action="/success.html" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="contact">
       <p hidden>
         <label>Don't fill this out if you're human: <input name="bot-field"></label>
@@ -466,7 +465,6 @@ footer a:hover{color:var(--gold)}
         <input type="email" name="email" placeholder="Email address" required>
       </div>
       <textarea name="message" placeholder="Tell me about your project..." required></textarea>
-      <p class="form-status" id="form-status" aria-live="polite"></p>
       <button type="submit" class="btn-submit">Send Enquiry</button>
     </form>
   </div>
@@ -496,45 +494,6 @@ footer a:hover{color:var(--gold)}
 // Nav scroll
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 80));
-
-// Contact form
-const contactForm = document.getElementById('contact-form');
-const formStatus = document.getElementById('form-status');
-if(contactForm) {
-  contactForm.addEventListener('submit', async e => {
-    e.preventDefault();
-    const data = new FormData(contactForm);
-    const name = String(data.get('name') || '').trim();
-    const email = String(data.get('email') || '').trim();
-    const message = String(data.get('message') || '').trim();
-    const submitButton = contactForm.querySelector('button[type="submit"]');
-
-    if(!name || !email || !message) {
-      formStatus.textContent = 'Please complete all fields before sending.';
-      return;
-    }
-
-    formStatus.textContent = 'Sending your enquiry...';
-    if(submitButton) submitButton.disabled = true;
-
-    try {
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString()
-      });
-
-      if(!response.ok) throw new Error('Form submission failed');
-
-      contactForm.reset();
-      formStatus.textContent = 'Thanks. Your enquiry has been sent.';
-    } catch(error) {
-      formStatus.textContent = 'Sorry, your enquiry could not be sent. Please email hello@alihemayed.com.au.';
-    } finally {
-      if(submitButton) submitButton.disabled = false;
-    }
-  });
-}
 
 // Hero slideshow
 const hSlides = document.querySelectorAll('.hslide');
