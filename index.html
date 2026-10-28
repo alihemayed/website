@@ -188,10 +188,6 @@ footer a:hover{color:var(--gold)}
   .btn-submit{width:100%;padding:1rem 1.25rem;letter-spacing:.2em}
   footer{padding:2rem 1.25rem;flex-direction:column;gap:.6rem;text-align:center}
   .footer-links{align-items:center}
-  .viewer-nav{top:auto;bottom:.85rem;transform:none;padding:1rem;font-size:1.7rem}
-  .v-prev{left:1rem}
-  .v-next{right:1rem}
-  .viewer-counter{bottom:1.65rem}
 }
 @media(max-width:640px){
   .hero{min-height:100svh}
@@ -216,31 +212,24 @@ footer a:hover{color:var(--gold)}
 }
 
 /* PROJECT VIEWER */
-.project-viewer{position:fixed;inset:0;z-index:200;background:#0e0d0b;opacity:0;pointer-events:none;transition:opacity .5s ease}
+.project-viewer{position:fixed;inset:0;z-index:200;background:var(--cream);opacity:0;pointer-events:none;overflow-y:auto;transition:opacity .5s ease}
 .project-viewer.open{opacity:1;pointer-events:all}
-.viewer-header{position:fixed;top:0;left:0;right:0;z-index:202;display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2.5rem}
-.viewer-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7)}
-.viewer-close{background:none;border:none;color:rgba(255,255,255,.6);font-size:1.5rem;cursor:pointer;line-height:1;padding:.4rem;transition:color .2s}
-.viewer-close:hover{color:#fff}
-.viewer-track{position:absolute;inset:0;display:flex;align-items:center;overflow:hidden}
-.viewer-slide{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:4rem 5rem;opacity:0;transition:opacity .5s ease,transform .5s ease;transform:translateX(60px);pointer-events:none}
-.viewer-slide.active{opacity:1;transform:translateX(0);pointer-events:all}
-.viewer-slide.prev{opacity:0;transform:translateX(-60px)}
-.viewer-slide.from-left{transform:translateX(-60px)}
-.viewer-slide.from-right{transform:translateX(60px)}
-.viewer-slide.exit-left{opacity:0;transform:translateX(-60px)}
-.viewer-slide.exit-right{opacity:0;transform:translateX(60px)}
-.viewer-slide img{max-width:100%;max-height:100vh;object-fit:contain;display:block}
-.viewer-nav{position:fixed;top:50%;transform:translateY(-50%);z-index:202;background:none;border:none;color:rgba(255,255,255,.5);font-size:2rem;cursor:pointer;padding:1.5rem;transition:color .2s;user-select:none}
-.viewer-nav:hover{color:#fff}
-.v-prev{left:.5rem}
-.v-next{right:.5rem}
-.viewer-counter{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);font-size:.65rem;letter-spacing:.22em;color:rgba(255,255,255,.35);z-index:202}
+.viewer-header{position:sticky;top:0;z-index:202;display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2.5rem;background:rgba(245,242,238,.92);backdrop-filter:blur(10px)}
+.viewer-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--charcoal)}
+.viewer-close{background:none;border:none;color:var(--mid);font-size:1.5rem;cursor:pointer;line-height:1;padding:.4rem;transition:color .2s}
+.viewer-close:hover{color:var(--charcoal)}
+.viewer-track{display:flex;flex-direction:column;max-width:1700px;margin:0 auto;padding:2rem 2rem 8rem}
+.viewer-slide{width:var(--board-width,62%);margin-top:var(--board-gap,2rem);align-self:var(--board-align,center);overflow:hidden;background:#171614;animation:boardIn .45s ease both}
+.viewer-slide.portrait{width:min(var(--board-width,62%),52%);background:transparent;display:flex;justify-content:center}
+.viewer-slide img{display:block;width:100%;height:auto}
+.viewer-slide.portrait img{width:auto;max-width:100%;max-height:calc(100vh - 7rem);object-fit:contain}
+.viewer-slide:nth-child(2){animation-delay:.05s}.viewer-slide:nth-child(3){animation-delay:.1s}.viewer-slide:nth-child(4){animation-delay:.15s}.viewer-slide:nth-child(5){animation-delay:.2s}.viewer-slide:nth-child(6){animation-delay:.25s}
+@keyframes boardIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:900px){
-  .project-viewer{background:#000}
-  .project-viewer .viewer-header{padding:1rem 1.1rem;background:linear-gradient(to bottom,rgba(0,0,0,.45),rgba(0,0,0,0))}
-  .project-viewer .viewer-slide{padding:0}
-  .project-viewer .viewer-slide img{width:100vw;height:100svh;max-width:none;max-height:none;object-fit:contain;background:#000}
+  .project-viewer{background:var(--cream)}
+  .project-viewer .viewer-header{padding:1rem 1.1rem;background:rgba(245,242,238,.94)}
+  .viewer-track{display:block;padding:0 0 1rem}
+  .viewer-slide,.viewer-slide.portrait{width:100%;margin:.35rem 0 0}
 }
 </style>
 </head>
@@ -399,6 +388,19 @@ footer a:hover{color:var(--gold)}
   <div class="proj-overlay"><span class="proj-overlay-title">Hakea</span></div>
 </div>
 
+<div class="project-card" data-project="Harrington">
+  <div class="pslider">
+    <div class="ps active"><img decoding="async" src="Harrington/1.jpg" alt="Harrington" loading="lazy"></div>
+    <div class="ps"><img decoding="async" src="Harrington/1c.jpg" alt="Harrington" loading="lazy"></div>
+    <div class="ps"><img decoding="async" src="Harrington/2.jpg" alt="Harrington" loading="lazy"></div>
+    <div class="ps"><img decoding="async" src="Harrington/3.jpg" alt="Harrington" loading="lazy"></div>
+    <div class="ps"><img decoding="async" src="Harrington/4.jpg" alt="Harrington" loading="lazy"></div>
+    <div class="ps"><img decoding="async" src="Harrington/5.jpg" alt="Harrington" loading="lazy"></div>
+    <div class="ps"><img decoding="async" src="Harrington/6.jpg" alt="Harrington" loading="lazy"></div>
+  </div>
+  <div class="proj-overlay"><span class="proj-overlay-title">Harrington</span></div>
+</div>
+
 </div>
 </section>
 
@@ -489,11 +491,9 @@ footer a:hover{color:var(--gold)}
     <button class="viewer-close" id="viewer-close">&#10005;</button>
   </div>
   <div class="viewer-track" id="viewer-track"></div>
-  <button class="viewer-nav v-prev" id="v-prev">&#8592;</button>
-  <button class="viewer-nav v-next" id="v-next">&#8594;</button>
-  <div class="viewer-counter" id="viewer-counter"></div>
 </div>
 
+<script src="spaces-grid-projects.js"></script>
 <script>
 // Nav scroll
 const nav = document.getElementById('nav');
@@ -561,6 +561,71 @@ function startHero() { hTimer = setInterval(() => goHero(hCurrent + 1), 5000); }
 hDots.forEach((d, i) => d.addEventListener('click', () => { clearInterval(hTimer); goHero(i); startHero(); }));
 startHero();
 
+// Rebuild the portfolio from the projects in "Spaces as they are grid".
+const projectGrid = document.querySelector('.proj-grid');
+if(projectGrid && window.SPACES_GRID_PROJECTS) {
+  projectGrid.querySelectorAll('.project-card').forEach(card => card.remove());
+
+  const projectCovers = {
+    Angul: 'Spaces as they are grid/Angul/27_Angul_265.jpg',
+        Callistemon: 'Spaces as they are grid/Callistemon/8_Callistemon_062.jpg',
+    Harrington: 'Spaces as they are grid/Harrington/1_Harrington_201_1.jpg',
+    Hick: 'Spaces as they are grid/Hick/11_Hick_034.jpg',
+    Kendall: 'Spaces as they are grid/Kendall/2A_Kendall_015.jpg',
+    Kernot: 'Spaces as they are grid/Kernot/front.jpeg',
+    Signal: 'Spaces as they are grid/Signal /JPEG/34_Signal_101_1.jpg',
+        Trident: 'Spaces as they are grid/Trident/16_Trident_211.jpg',
+    Webster: 'Spaces as they are grid/Webster/18_Webster_256.jpg'
+  };
+  const projectOrder = [
+    'Kernot', 'Kendall', 'Webster',
+    'Harrington', 'Callistemon', 'Angul',
+    'Trident', 'Hick', 'Signal'
+  ];
+
+  projectOrder.forEach(name => {
+    const images = window.SPACES_GRID_PROJECTS[name];
+    if(!images) return;
+    const galleryImages = name === 'Harrington'
+      ? images.filter(src => ![
+          'Spaces as they are grid/Harrington/1_Harrington_162_1_2.jpg',
+          'Spaces as they are grid/Harrington/1_Harrington_313.jpg'
+        ].includes(src))
+      : images;
+    const cover = projectCovers[name];
+    const orderedImages = cover && galleryImages.includes(cover)
+      ? [cover, ...galleryImages.filter(src => src !== cover)]
+      : galleryImages;
+    const card = document.createElement('div');
+    card.className = 'project-card';
+    card.dataset.project = name;
+
+    const slider = document.createElement('div');
+    slider.className = 'pslider';
+    orderedImages.forEach((src, index) => {
+      const slide = document.createElement('div');
+      slide.className = 'ps' + (index === 0 ? ' active' : '');
+      const image = document.createElement('img');
+      image.decoding = 'async';
+      image.src = src;
+      image.alt = name;
+      image.loading = 'lazy';
+      slide.appendChild(image);
+      slider.appendChild(slide);
+    });
+
+    const overlay = document.createElement('div');
+    overlay.className = 'proj-overlay';
+    const title = document.createElement('span');
+    title.className = 'proj-overlay-title';
+    title.textContent = name;
+    overlay.appendChild(title);
+
+    card.append(slider, overlay);
+    projectGrid.appendChild(card);
+  });
+}
+
 // Project sliders
 document.querySelectorAll('.project-card').forEach(card => {
   const slides = card.querySelectorAll('.ps');
@@ -606,32 +671,37 @@ document.querySelectorAll('.project-card').forEach(card => {
   });
 });
 
-// Project viewer — horizontal slide
+// Project viewer — image gallery board
 const viewer = document.getElementById('project-viewer');
 const viewerTitle = document.getElementById('viewer-title');
 const viewerTrack = document.getElementById('viewer-track');
 const viewerClose = document.getElementById('viewer-close');
-const viewerCounter = document.getElementById('viewer-counter');
-let vSlides = [], vCur = 0;
 
 function openViewer(card) {
   const name = card.dataset.project;
   const imgs = Array.from(card.querySelectorAll('.ps img'));
+  const widths = [68, 74, 80, 86, 92];
+  const alignments = ['flex-start', 'center', 'flex-end'];
   viewerTitle.textContent = name;
   viewerTrack.innerHTML = '';
-  vSlides = [];
-  imgs.forEach((img, i) => {
+  imgs.forEach((img, index) => {
     const slide = document.createElement('div');
-    slide.className = 'viewer-slide' + (i === 0 ? ' active' : '');
+    slide.className = 'viewer-slide';
+    slide.style.setProperty('--board-width', widths[Math.floor(Math.random() * widths.length)] + '%');
+    slide.style.setProperty('--board-align', alignments[Math.floor(Math.random() * alignments.length)]);
+    slide.style.setProperty('--board-gap', (index === 0 ? 0 : 2 + Math.random() * 5).toFixed(1) + 'rem');
     const im = document.createElement('img');
     im.src = img.src;
     im.alt = img.alt;
+    im.loading = 'lazy';
+    const setOrientation = () => {
+      if(im.naturalHeight > im.naturalWidth) slide.classList.add('portrait');
+    };
+    im.addEventListener('load', setOrientation, { once:true });
+    if(im.complete) setOrientation();
     slide.appendChild(im);
     viewerTrack.appendChild(slide);
-    vSlides.push(slide);
   });
-  vCur = 0;
-  updateCounter();
   viewer.classList.add('open');
   viewer.scrollTop = 0;
   document.body.style.overflow = 'hidden';
@@ -640,33 +710,7 @@ function openViewer(card) {
 function closeViewer() {
   viewer.classList.remove('open');
   viewerTrack.innerHTML = '';
-  vSlides = [];
-  vCur = 0;
   document.body.style.overflow = '';
-}
-
-function goViewer(dir) {
-  if(!vSlides.length) return;
-  const prevSlide = vSlides[vCur];
-  prevSlide.classList.remove('active', 'from-left', 'from-right');
-  prevSlide.classList.add(dir > 0 ? 'exit-left' : 'exit-right');
-  vCur = (vCur + dir + vSlides.length) % vSlides.length;
-  const nextSlide = vSlides[vCur];
-  nextSlide.classList.remove('exit-left', 'exit-right', 'prev');
-  nextSlide.classList.add(dir > 0 ? 'from-right' : 'from-left');
-  nextSlide.offsetHeight;
-  nextSlide.classList.add('active');
-  nextSlide.classList.remove('from-left', 'from-right');
-  setTimeout(() => prevSlide.classList.remove('exit-left', 'exit-right', 'prev'), 500);
-  updateCounter();
-}
-
-function updateCounter() {
-  if(!vSlides.length) {
-    viewerCounter.textContent = '';
-    return;
-  }
-  viewerCounter.textContent = (vCur + 1) + ' / ' + vSlides.length;
 }
 
 document.querySelectorAll('.project-card').forEach(card => {
@@ -674,22 +718,10 @@ document.querySelectorAll('.project-card').forEach(card => {
   card.addEventListener('click', () => openViewer(card));
 });
 
-document.getElementById('v-prev').addEventListener('click', () => goViewer(-1));
-document.getElementById('v-next').addEventListener('click', () => goViewer(1));
 viewerClose.addEventListener('click', closeViewer);
 document.addEventListener('keydown', e => {
   if(!viewer.classList.contains('open')) return;
   if(e.key === 'Escape') closeViewer();
-  if(e.key === 'ArrowRight') goViewer(1);
-  if(e.key === 'ArrowLeft') goViewer(-1);
-});
-
-// Touch/swipe support
-let touchStartX = 0;
-viewer.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
-viewer.addEventListener('touchend', e => {
-  const diff = touchStartX - e.changedTouches[0].clientX;
-  if(Math.abs(diff) > 50) goViewer(diff > 0 ? 1 : -1);
 });
 </script>
 </body>
