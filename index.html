@@ -214,10 +214,17 @@ footer a:hover{color:var(--gold)}
 /* PROJECT VIEWER */
 .project-viewer{position:fixed;inset:0;z-index:200;background:var(--cream);opacity:0;pointer-events:none;overflow-y:auto;transition:opacity .5s ease}
 .project-viewer.open{opacity:1;pointer-events:all}
-.viewer-header{position:sticky;top:0;z-index:202;display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2.5rem;background:rgba(245,242,238,.92);backdrop-filter:blur(10px)}
-.viewer-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--charcoal)}
-.viewer-close{background:none;border:none;color:var(--mid);font-size:1.5rem;cursor:pointer;line-height:1;padding:.4rem;transition:color .2s}
+.viewer-header{position:relative;display:flex;align-items:center;max-width:1700px;margin:0 auto;padding:5rem 5.5rem 1.4rem 2rem}
+.viewer-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,7vw,7rem);font-weight:400;line-height:1;letter-spacing:.045em;text-transform:uppercase;color:var(--charcoal)}
+.viewer-intro{max-width:1700px;width:100%;margin:0 auto;padding:1.2rem 2rem .5rem}
+.viewer-description{max-width:42rem;font-size:clamp(.95rem,1.2vw,1.08rem);font-weight:300;line-height:1.8;color:var(--mid)}
+.viewer-close{position:fixed;top:1.4rem;right:1.5rem;z-index:203;display:grid;place-items:center;width:44px;height:44px;background:rgba(245,242,238,.94);border:none;border-radius:50%;color:var(--mid);font-size:1.5rem;cursor:pointer;line-height:1;padding:.4rem;transition:color .2s}
+.viewer-close:focus-visible{outline:2px solid var(--charcoal);outline-offset:3px}
 .viewer-close:hover{color:var(--charcoal)}
+.viewer-home{position:fixed;top:1.4rem;left:2rem;z-index:203;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:rgba(245,242,238,.85);color:var(--mid);cursor:pointer;transition:color .2s}
+.viewer-home:hover{color:var(--charcoal)}
+.viewer-home svg{width:22px;height:22px}
+.viewer-home:focus-visible{outline:2px solid var(--charcoal);outline-offset:3px}
 .viewer-track{display:flex;flex-direction:column;max-width:1700px;margin:0 auto;padding:2rem 2rem 8rem}
 .viewer-slide{width:var(--board-width,62%);margin-top:var(--board-gap,2rem);align-self:var(--board-align,center);overflow:hidden;background:#171614;opacity:0;filter:blur(2px);transform:translateY(24px) scale(.992);transition:opacity 1s ease,filter 1s ease,transform 1s cubic-bezier(.22,.61,.36,1)}
 .viewer-slide.portrait{width:min(var(--board-width,62%),52%);background:transparent;display:flex;justify-content:center}
@@ -233,7 +240,11 @@ footer a:hover{color:var(--gold)}
 @media(prefers-reduced-motion:reduce){.viewer-slide,.viewer-group{transform:none;filter:none;transition:opacity .45s ease}}
 @media(max-width:900px){
   .project-viewer{background:var(--cream)}
-  .project-viewer .viewer-header{padding:1rem 1.1rem;background:rgba(245,242,238,.94)}
+  .project-viewer .viewer-header{padding:4.5rem 1.1rem 1rem}
+  .viewer-close{top:1rem;right:.75rem}
+  .viewer-home{top:1rem;left:1.1rem}
+  .viewer-title{font-size:clamp(2.5rem,10vw,5rem);letter-spacing:.025em}
+  .viewer-intro{padding:.6rem 1.1rem 1.5rem}
   .viewer-track{display:block;padding:0 0 1rem}
   .viewer-slide,.viewer-slide.portrait{width:100%;margin:.35rem 0 0}
   .viewer-group,.viewer-group.pair{width:100%;display:block;margin:.35rem 0 0}
@@ -498,10 +509,12 @@ footer a:hover{color:var(--gold)}
 <!-- PROJECT VIEWER -->
 <div class="project-viewer" id="project-viewer">
   <div class="viewer-header">
-    <span class="viewer-title" id="viewer-title"></span>
-    <button class="viewer-close" id="viewer-close">&#10005;</button>
+    <h2 class="viewer-title" id="viewer-title"></h2>
+    <button class="viewer-close" id="viewer-close" type="button" aria-label="Close project">&#10005;</button>
   </div>
+  <div class="viewer-intro"><p class="viewer-description" id="viewer-description"></p></div>
   <div class="viewer-track" id="viewer-track"></div>
+  <button class="viewer-home" id="viewer-home" type="button" aria-label="Back to home" title="Back to home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button>
 </div>
 
 <script src="spaces-grid-projects.js"></script>
@@ -693,6 +706,18 @@ document.querySelectorAll('.project-card').forEach(card => {
 // Project viewer — image gallery board
 const viewer = document.getElementById('project-viewer');
 const viewerTitle = document.getElementById('viewer-title');
+const viewerDescription = document.getElementById('viewer-description');
+const projectDescriptions = {
+  Webster: 'Soft curves and warm timber frame a dialogue between indoors and out.',
+  Trident: 'Light and shadow trace sculptural stairs and quiet thresholds.',
+  Kendall: 'Gentle curves, pale timber and garden views draw light through the home.',
+  Kernot: 'Arched openings bring rhythm to a study of light, texture and form.',
+  Callistemon: 'Natural light and the presence of everyday life give each space its character.',
+  Angul: 'Views unfold from quiet interiors to the pool and courtyard beyond.',
+  Hick: 'Timber, glass and intersecting lines reveal the geometry of the home.',
+  Harrington: 'A considered portrait of home, from the facade to the details within.',
+  Signal: 'An exploration of the home through light, perspective and detail.'
+};
 const viewerTrack = document.getElementById('viewer-track');
 const viewerClose = document.getElementById('viewer-close');
 let viewerRevealObserver;
@@ -724,6 +749,8 @@ function openViewer(card, updateAddress = true) {
   const widths = [68, 74, 80, 86, 92];
   const alignments = ['flex-start', 'center', 'flex-end'];
   viewerTitle.textContent = name;
+  viewerDescription.textContent = projectDescriptions[name] || '';
+  viewerDescription.parentElement.hidden = !projectDescriptions[name];
   viewerTrack.innerHTML = '';
   const tridentGroups = name === 'Trident' ? [
     ['16_Trident_025.jpg', '16_Trident_167_2.jpg'],
@@ -828,6 +855,14 @@ projectCards().forEach(card => {
 });
 
 viewerClose.addEventListener('click', closeViewer);
+document.getElementById('viewer-home').addEventListener('click', () => {
+  closeViewer(false);
+  history.replaceState(null, '', location.href.split('#')[0]);
+  const home = document.getElementById('home');
+  home.setAttribute('tabindex', '-1');
+  home.focus({ preventScroll: true });
+  window.scrollTo({ top: 0, behavior: 'instant' });
+});
 document.addEventListener('keydown', e => {
   if(!viewer.classList.contains('open')) return;
   if(e.key === 'Escape') closeViewer();
