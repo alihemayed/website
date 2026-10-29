@@ -219,9 +219,6 @@ footer a:hover{color:var(--gold)}
 .viewer-title{max-width:100%;font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,3.8vw,5.5rem);font-weight:400;line-height:1;letter-spacing:.025em;text-transform:uppercase;color:var(--charcoal);overflow-wrap:anywhere}
 .viewer-hero-image{display:block;min-width:0;min-height:0;width:100%;height:100%;object-fit:cover;object-position:center}
 .viewer-description{max-width:42rem;font-size:clamp(.95rem,1.2vw,1.08rem);font-weight:300;line-height:1.8;color:var(--mid)}
-.viewer-close{position:fixed;top:1.4rem;right:1.5rem;z-index:203;display:grid;place-items:center;width:44px;height:44px;background:rgba(245,242,238,.94);border:none;border-radius:50%;color:var(--mid);font-size:1.5rem;cursor:pointer;line-height:1;padding:.4rem;transition:color .2s}
-.viewer-close:focus-visible{outline:2px solid var(--charcoal);outline-offset:3px}
-.viewer-close:hover{color:var(--charcoal)}
 .viewer-home{position:fixed;top:1.4rem;left:2rem;z-index:203;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:rgba(245,242,238,.85);color:var(--mid);cursor:pointer;transition:color .2s}
 .viewer-home:hover{color:var(--charcoal)}
 .viewer-home svg{width:22px;height:22px}
@@ -241,7 +238,6 @@ footer a:hover{color:var(--gold)}
 @media(prefers-reduced-motion:reduce){.viewer-slide,.viewer-group{transform:none;filter:none;transition:opacity .45s ease}}
 @media(max-width:900px){
   .project-viewer{background:var(--cream)}
-  .viewer-close{top:1rem;right:.75rem}
   .viewer-home{top:1rem;left:1.1rem}
   .viewer-title{font-size:clamp(1.8rem,4.2vw,3rem);letter-spacing:.025em}
   .viewer-track{display:block;padding:0 0 1rem}
@@ -520,7 +516,6 @@ footer a:hover{color:var(--gold)}
     </div>
     <img class="viewer-hero-image" id="viewer-hero-image" alt="" decoding="async" fetchpriority="high">
   </div>
-  <button class="viewer-close" id="viewer-close" type="button" aria-label="Close project">&#10005;</button>
   <div class="viewer-track" id="viewer-track"></div>
   <button class="viewer-home" id="viewer-home" type="button" aria-label="Back to home" title="Back to home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button>
 </div>
@@ -740,7 +735,6 @@ const projectHeroes = {
   Signal: { file: '34_Signal_088_1.jpg', position: '60% 50%', alt: 'Soft daylight through sheer curtains illuminating a curved sofa and geometric cabinet' }
 };
 const viewerTrack = document.getElementById('viewer-track');
-const viewerClose = document.getElementById('viewer-close');
 let viewerRevealObserver;
 
 const projectSlug = name => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -888,7 +882,6 @@ projectCards().forEach(card => {
   card.addEventListener('click', () => openViewer(card));
 });
 
-viewerClose.addEventListener('click', closeViewer);
 document.getElementById('viewer-home').addEventListener('click', () => {
   closeViewer(false);
   history.replaceState(null, '', location.href.split('#')[0]);
