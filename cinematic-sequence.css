@@ -1,0 +1,216 @@
+.cinematic-journey {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 620px;
+  padding: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: #11100f;
+  color: #fff;
+}
+
+.cinematic-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: opacity var(--cinematic-fade, 1300ms) cubic-bezier(.36, 0, .22, 1);
+}
+
+.cinematic-layer.is-visible {
+  opacity: 1;
+  z-index: 1;
+}
+
+.cinematic-layer img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: var(--cinematic-focal, center center);
+  backface-visibility: hidden;
+  transform-origin: var(--cinematic-focal, center center);
+}
+
+.cinematic-tone {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(9, 8, 7, .38), transparent 42%, rgba(9, 8, 7, .08));
+}
+
+.cinematic-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.cinematic-journey.transition-dark .cinematic-veil {
+  background: #080807;
+  animation: cinematicVeil 1300ms ease both;
+}
+
+.cinematic-journey.transition-light .cinematic-veil {
+  background: #f5f2ec;
+  animation: cinematicVeilLight 1300ms ease both;
+}
+
+@keyframes cinematicVeil {
+  0%, 100% { opacity: 0; }
+  48% { opacity: .16; }
+}
+
+@keyframes cinematicVeilLight {
+  0%, 100% { opacity: 0; }
+  48% { opacity: .12; }
+}
+
+.cinematic-ending {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(5.5rem, 10vh, 8.5rem);
+  z-index: 5;
+  display: grid;
+  justify-items: center;
+  gap: .7rem;
+  opacity: 0;
+  transform: translate(-50%, 12px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
+  pointer-events: none;
+  text-align: center;
+  text-shadow: 0 1px 18px rgba(0, 0, 0, .36);
+}
+
+.cinematic-ending.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.cinematic-mark {
+  font-family: 'Jost', sans-serif;
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  font-weight: 400;
+  letter-spacing: .34em;
+  padding-left: .34em;
+}
+
+.cinematic-manifesto {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(.95rem, 1.4vw, 1.18rem);
+  font-weight: 300;
+  letter-spacing: .14em;
+  white-space: nowrap;
+}
+
+.cinematic-skip,
+.cinematic-enter {
+  position: absolute;
+  z-index: 6;
+  bottom: 1.65rem;
+  border: 0;
+  color: rgba(255, 255, 255, .74);
+  background: transparent;
+  font-family: 'Jost', sans-serif;
+  font-size: .61rem;
+  font-weight: 400;
+  letter-spacing: .24em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .3s ease, opacity .8s ease;
+}
+
+.cinematic-skip {
+  right: 2rem;
+  padding: .75rem 0 .75rem .75rem;
+}
+
+.cinematic-enter {
+  left: 50%;
+  opacity: 0;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.cinematic-enter::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 30px;
+  margin: .7rem auto -2.4rem;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, .7), transparent);
+}
+
+.cinematic-journey.is-complete .cinematic-skip {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cinematic-journey.is-complete .cinematic-enter {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cinematic-skip:hover,
+.cinematic-enter:hover,
+.cinematic-skip:focus-visible,
+.cinematic-enter:focus-visible {
+  color: #fff;
+}
+
+.cinematic-skip:focus-visible,
+.cinematic-enter:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, .8);
+  outline-offset: 6px;
+}
+
+@media (max-width: 700px) {
+  .cinematic-journey {
+    min-height: 560px;
+  }
+
+  .cinematic-layer img {
+    object-position: var(--cinematic-focal-mobile, var(--cinematic-focal, center center));
+  }
+
+  .cinematic-tone {
+    background: linear-gradient(to top, rgba(9, 8, 7, .46), transparent 48%, rgba(9, 8, 7, .1));
+  }
+
+  .cinematic-skip {
+    right: 1.25rem;
+    bottom: 1.25rem;
+  }
+
+  .cinematic-enter {
+    bottom: 1.25rem;
+  }
+
+  .cinematic-ending {
+    bottom: 6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-layer {
+    transition-duration: 600ms;
+  }
+
+  .cinematic-journey.transition-dark .cinematic-veil,
+  .cinematic-journey.transition-light .cinematic-veil {
+    animation: none;
+  }
+
+  .cinematic-ending,
+  .cinematic-skip,
+  .cinematic-enter {
+    transition-duration: 400ms;
+  }
+}

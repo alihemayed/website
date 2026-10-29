@@ -6,6 +6,8 @@
 <title>Ali Hemayed Photography</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/cinematic/trident-facade-2200.jpg" imagesrcset="assets/cinematic/trident-facade-1200.jpg 1200w, assets/cinematic/trident-facade-2200.jpg 2200w" imagesizes="100vw" fetchpriority="high">
+<link rel="stylesheet" href="cinematic-sequence.css">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -28,26 +30,6 @@ nav.scrolled{background:rgba(0,0,0,0.45);backdrop-filter:blur(8px);border-bottom
 .nav-links a{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:rgba(255,255,255,.85);transition:color .3s}
 nav.scrolled .nav-links a{color:rgba(255,255,255,0.85)}
 .nav-links a:hover{color:var(--gold)}
-
-/* HERO */
-.hero{height:100vh;position:relative;overflow:hidden}
-.hero-slides{position:absolute;inset:0}
-.hslide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
-.hslide.active{opacity:1}
-.hslide img{width:100%;height:100%;object-fit:cover;object-position:center}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,14,12,.75) 0%,rgba(15,14,12,.25) 40%,rgba(15,14,12,.1) 100%);z-index:1}
-.hero-content{position:absolute;bottom:4rem;left:3rem;z-index:2;animation:slideUp 1.2s .4s ease both}
-@keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-.hero-eyebrow{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem}
-.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:300;line-height:1.02;color:#fff;margin-bottom:1.2rem}
-.hero-title em{font-style:italic}
-.hero-nav{position:absolute;bottom:2rem;right:3rem;z-index:2;display:flex;gap:.5rem}
-.hero-dot{width:34px;height:18px;background:none;border:0;cursor:pointer;position:relative;padding:0}
-.hero-dot::before{content:'';position:absolute;left:3px;right:3px;top:50%;height:2px;background:rgba(255,255,255,.3);transform:translateY(-50%);transition:background .3s}
-.hero-dot.active::before{background:var(--gold)}
-.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.4rem}
-.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,rgba(255,255,255,.35),transparent);animation:sp 2s infinite}
-@keyframes sp{0%,100%{opacity:.35}50%{opacity:.9}}
 
 /* SECTIONS */
 section{padding:7rem 3rem}
@@ -254,31 +236,22 @@ footer a:hover{color:var(--gold)}
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-slides" id="heroSlides">
-    <div class="hslide active"><img decoding="async" fetchpriority="high" src="assets/site/image-002-8f45ffd85f51.jpg" alt="Kernot architectural exterior"></div>
-    <div class="hslide"><img decoding="async" src="assets/site/image-003-31f87cf20729.jpg" alt="Railway living room"></div>
-    <div class="hslide"><img decoding="async" src="assets/site/image-004-32b5b93278ac.jpg" alt="Hero carousel replacement"></div>
-    <div class="hslide"><img decoding="async" src="assets/site/image-005-85d1877d18ff.jpg" alt="Green kitchen with brass pendants"></div>
-    <div class="hslide"><img decoding="async" src="assets/site/image-006-6a8a9d7336a3.jpg" alt="Aerial dining table"></div>
-    <div class="hslide"><img decoding="async" src="assets/site/image-007-d64fe27a0c48.jpg" alt="Bathroom with marble vanity and fluted glass shower"></div>
+<!-- CINEMATIC HOMEPAGE JOURNEY -->
+<section class="cinematic-journey" id="home" data-cinematic-sequence aria-label="A quiet architectural journey through selected work">
+  <figure class="cinematic-layer">
+    <img decoding="async" fetchpriority="high" src="assets/cinematic/trident-facade-2200.jpg" srcset="assets/cinematic/trident-facade-1200.jpg 1200w, assets/cinematic/trident-facade-2200.jpg 2200w" sizes="100vw" alt="Trident facade at dusk">
+  </figure>
+  <figure class="cinematic-layer">
+    <img decoding="async" alt="">
+  </figure>
+  <div class="cinematic-tone" aria-hidden="true"></div>
+  <div class="cinematic-veil" aria-hidden="true"></div>
+  <div class="cinematic-ending" aria-hidden="true">
+    <span class="cinematic-mark">AH</span>
+    <span class="cinematic-manifesto">Light · Space · Intention</span>
   </div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <h1 class="hero-title">Light.<br><em>Space.</em><br>Intention.</h1>
-  </div>
-  <div class="hero-nav" id="heroDots">
-    <button type="button" class="hero-dot active" aria-label="Show hero image 1"></button>
-    <button type="button" class="hero-dot" aria-label="Show hero image 2"></button>
-    <button type="button" class="hero-dot" aria-label="Show hero image 3"></button>
-    <button type="button" class="hero-dot" aria-label="Show hero image 4"></button>
-    <button type="button" class="hero-dot" aria-label="Show hero image 5"></button>
-    <button type="button" class="hero-dot" aria-label="Show hero image 6"></button>
-  </div>
-  <div class="scroll-hint">
-    <div class="scroll-line"></div>
-  </div>
+  <button class="cinematic-skip" type="button">Skip to projects</button>
+  <a class="cinematic-enter" href="#work" aria-hidden="true" tabindex="-1">View projects</a>
 </section>
 
 <!-- ABOUT -->
@@ -292,6 +265,7 @@ footer a:hover{color:var(--gold)}
     <span class="proj-count">9 Projects</span>
   </div>
   <div class="proj-grid">
+<template aria-hidden="true">
 <div class="project-card" data-project="Kernot">
   <div class="pslider">
     <div class="ps active"><img decoding="async" src="assets/site/image-002-8f45ffd85f51.jpg" alt="Kernot" loading="lazy"></div>
@@ -410,6 +384,7 @@ footer a:hover{color:var(--gold)}
   <div class="proj-overlay"><span class="proj-overlay-title">Harrington</span></div>
 </div>
 
+</template>
 </div>
 </section>
 
@@ -503,6 +478,7 @@ footer a:hover{color:var(--gold)}
 </div>
 
 <script src="spaces-grid-projects.js"></script>
+<script src="cinematic-sequence.js"></script>
 <script>
 // Nav scroll
 const nav = document.getElementById('nav');
@@ -554,21 +530,6 @@ if(contactForm) {
     }
   });
 }
-
-// Hero slideshow
-const hSlides = document.querySelectorAll('.hslide');
-const hDots = document.querySelectorAll('.hero-dot');
-let hCurrent = 0, hTimer;
-function goHero(n) {
-  hSlides[hCurrent].classList.remove('active');
-  hDots[hCurrent].classList.remove('active');
-  hCurrent = (n + hSlides.length) % hSlides.length;
-  hSlides[hCurrent].classList.add('active');
-  hDots[hCurrent].classList.add('active');
-}
-function startHero() { hTimer = setInterval(() => goHero(hCurrent + 1), 5000); }
-hDots.forEach((d, i) => d.addEventListener('click', () => { clearInterval(hTimer); goHero(i); startHero(); }));
-startHero();
 
 // Rebuild the portfolio from the projects in "Spaces as they are grid".
 const projectGrid = document.querySelector('.proj-grid');
