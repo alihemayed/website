@@ -219,17 +219,26 @@ footer a:hover{color:var(--gold)}
 .viewer-close{background:none;border:none;color:var(--mid);font-size:1.5rem;cursor:pointer;line-height:1;padding:.4rem;transition:color .2s}
 .viewer-close:hover{color:var(--charcoal)}
 .viewer-track{display:flex;flex-direction:column;max-width:1700px;margin:0 auto;padding:2rem 2rem 8rem}
-.viewer-slide{width:var(--board-width,62%);margin-top:var(--board-gap,2rem);align-self:var(--board-align,center);overflow:hidden;background:#171614;animation:boardIn .45s ease both}
+.viewer-slide{width:var(--board-width,62%);margin-top:var(--board-gap,2rem);align-self:var(--board-align,center);overflow:hidden;background:#171614;opacity:0;filter:blur(2px);transform:translateY(24px) scale(.992);transition:opacity 1s ease,filter 1s ease,transform 1s cubic-bezier(.22,.61,.36,1)}
 .viewer-slide.portrait{width:min(var(--board-width,62%),52%);background:transparent;display:flex;justify-content:center}
 .viewer-slide img{display:block;width:100%;height:auto}
 .viewer-slide.portrait img{width:auto;max-width:100%;max-height:calc(100vh - 7rem);object-fit:contain}
-.viewer-slide:nth-child(2){animation-delay:.05s}.viewer-slide:nth-child(3){animation-delay:.1s}.viewer-slide:nth-child(4){animation-delay:.15s}.viewer-slide:nth-child(5){animation-delay:.2s}.viewer-slide:nth-child(6){animation-delay:.25s}
-@keyframes boardIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.viewer-group{width:92%;align-self:center;display:grid;gap:1rem;margin-top:var(--board-gap,3rem);opacity:0;filter:blur(2px);transform:translateY(24px) scale(.992);transition:opacity 1s ease,filter 1s ease,transform 1s cubic-bezier(.22,.61,.36,1)}
+.viewer-group.pair{grid-template-columns:repeat(2,minmax(0,1fr))}
+.viewer-group.trio{grid-template-columns:repeat(3,minmax(0,1fr))}
+.viewer-group .viewer-slide,.viewer-group .viewer-slide.portrait{width:100%;margin:0;align-self:stretch;background:transparent;display:flex;align-items:center;justify-content:center}
+.viewer-group .viewer-slide img{width:100%;height:auto;max-height:calc(100vh - 7rem);object-fit:contain}
+.viewer-slide.in-view,.viewer-group.in-view{opacity:1;filter:blur(0);transform:none}
+.viewer-group.in-view .viewer-slide{opacity:1;filter:none;transform:none}
+@media(prefers-reduced-motion:reduce){.viewer-slide,.viewer-group{transform:none;filter:none;transition:opacity .45s ease}}
 @media(max-width:900px){
   .project-viewer{background:var(--cream)}
   .project-viewer .viewer-header{padding:1rem 1.1rem;background:rgba(245,242,238,.94)}
   .viewer-track{display:block;padding:0 0 1rem}
   .viewer-slide,.viewer-slide.portrait{width:100%;margin:.35rem 0 0}
+  .viewer-group,.viewer-group.pair{width:100%;display:block;margin:.35rem 0 0}
+  .viewer-group.trio{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.35rem;margin:.35rem 0 0}
+  .viewer-group .viewer-slide{margin:.35rem 0 0}
 }
 </style>
 </head>
@@ -563,13 +572,14 @@ startHero();
 
 // Rebuild the portfolio from the projects in "Spaces as they are grid".
 const projectGrid = document.querySelector('.proj-grid');
+const projectGalleryImages = {};
 if(projectGrid && window.SPACES_GRID_PROJECTS) {
   projectGrid.querySelectorAll('.project-card').forEach(card => card.remove());
 
   const projectCovers = {
     Angul: 'Spaces as they are grid/Angul/27_Angul_265.jpg',
         Callistemon: 'Spaces as they are grid/Callistemon/8_Callistemon_062.jpg',
-    Harrington: 'Spaces as they are grid/Harrington/1_Harrington_201_1.jpg',
+    Harrington: 'Spaces as they are grid/Harrington/1_Harrington_240_1.jpg',
     Hick: 'Spaces as they are grid/Hick/11_Hick_034.jpg',
     Kendall: 'Spaces as they are grid/Kendall/2A_Kendall_015.jpg',
     Kernot: 'Spaces as they are grid/Kernot/front.jpeg',
@@ -577,37 +587,44 @@ if(projectGrid && window.SPACES_GRID_PROJECTS) {
         Trident: 'Spaces as they are grid/Trident/16_Trident_211.jpg',
     Webster: 'Spaces as they are grid/Webster/18_Webster_256.jpg'
   };
+  const projectCoverPreviews = {
+    Angul: 'assets/project-covers/angul.jpg',
+    Callistemon: 'assets/project-covers/callistemon.jpg',
+    Harrington: 'assets/project-covers/harrington.jpg',
+    Hick: 'assets/project-covers/hick.jpg',
+    Kendall: 'assets/project-covers/kendall.jpg',
+    Kernot: 'assets/project-covers/kernot.jpg',
+    Signal: 'assets/project-covers/signal.jpg',
+    Trident: 'assets/project-covers/trident.jpg',
+    Webster: 'assets/project-covers/webster.jpg'
+  };
   const projectOrder = [
     'Kernot', 'Kendall', 'Webster',
-    'Harrington', 'Callistemon', 'Angul',
-    'Trident', 'Hick', 'Signal'
+    'Signal', 'Callistemon', 'Angul',
+    'Trident', 'Hick', 'Harrington'
   ];
 
   projectOrder.forEach(name => {
     const images = window.SPACES_GRID_PROJECTS[name];
     if(!images) return;
-    const galleryImages = name === 'Harrington'
-      ? images.filter(src => ![
-          'Spaces as they are grid/Harrington/1_Harrington_162_1_2.jpg',
-          'Spaces as they are grid/Harrington/1_Harrington_313.jpg'
-        ].includes(src))
-      : images;
+    const galleryImages = images;
     const cover = projectCovers[name];
     const orderedImages = cover && galleryImages.includes(cover)
       ? [cover, ...galleryImages.filter(src => src !== cover)]
       : galleryImages;
+    projectGalleryImages[name] = orderedImages;
     const card = document.createElement('div');
     card.className = 'project-card';
     card.dataset.project = name;
 
     const slider = document.createElement('div');
     slider.className = 'pslider';
-    orderedImages.forEach((src, index) => {
+    orderedImages.slice(0, 1).forEach(src => {
       const slide = document.createElement('div');
-      slide.className = 'ps' + (index === 0 ? ' active' : '');
+      slide.className = 'ps active';
       const image = document.createElement('img');
       image.decoding = 'async';
-      image.src = src;
+      image.src = projectCoverPreviews[name] || src;
       image.alt = name;
       image.loading = 'lazy';
       slide.appendChild(image);
@@ -676,20 +693,51 @@ const viewer = document.getElementById('project-viewer');
 const viewerTitle = document.getElementById('viewer-title');
 const viewerTrack = document.getElementById('viewer-track');
 const viewerClose = document.getElementById('viewer-close');
+let viewerRevealObserver;
 
-function openViewer(card) {
+const projectSlug = name => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const projectCards = () => Array.from(document.querySelectorAll('.project-card'));
+const cardFromHash = () => {
+  const slug = decodeURIComponent(location.hash.slice(1)).toLowerCase();
+  return projectCards().find(card => projectSlug(card.dataset.project) === slug);
+};
+
+function openViewer(card, updateAddress = true) {
   const name = card.dataset.project;
-  const imgs = Array.from(card.querySelectorAll('.ps img'));
+  let imgs = (projectGalleryImages[name] || []).map(src => ({
+    src: new URL(src, document.baseURI).href,
+    alt: name
+  }));
+  if(name === 'Trident') {
+    const facade = imgs.find(img => decodeURIComponent(img.src).includes('16_Trident_253.jpg'));
+    if(facade) imgs = [facade, ...imgs.filter(img => img !== facade)];
+  }
+  if(name === 'Harrington') {
+    const exteriorFiles = ['1_Harrington_240_1.jpg', '1_Harrington_313_web.jpg', '1_Harrington_378_1.jpg'];
+    const exteriors = exteriorFiles
+      .map(file => imgs.find(img => decodeURIComponent(img.src).includes(file)))
+      .filter(Boolean);
+    imgs = [...exteriors, ...imgs.filter(img => !exteriors.includes(img))];
+  }
   const widths = [68, 74, 80, 86, 92];
   const alignments = ['flex-start', 'center', 'flex-end'];
   viewerTitle.textContent = name;
   viewerTrack.innerHTML = '';
-  imgs.forEach((img, index) => {
+  const tridentGroups = name === 'Trident' ? [
+    ['16_Trident_025.jpg', '16_Trident_167_2.jpg'],
+    ['16_Trident_194.jpg', '16_Trident_123.jpg', '16_Trident_189.jpg']
+  ] : [];
+  const groupedFiles = new Set(tridentGroups.flat());
+  const filename = img => decodeURIComponent(new URL(img.src).pathname.split('/').pop());
+
+  const createSlide = (img, index, grouped = false) => {
     const slide = document.createElement('div');
     slide.className = 'viewer-slide';
-    slide.style.setProperty('--board-width', widths[Math.floor(Math.random() * widths.length)] + '%');
-    slide.style.setProperty('--board-align', alignments[Math.floor(Math.random() * alignments.length)]);
-    slide.style.setProperty('--board-gap', (index === 0 ? 0 : 2 + Math.random() * 5).toFixed(1) + 'rem');
+    if(!grouped) {
+      slide.style.setProperty('--board-width', widths[Math.floor(Math.random() * widths.length)] + '%');
+      slide.style.setProperty('--board-align', alignments[Math.floor(Math.random() * alignments.length)]);
+      slide.style.setProperty('--board-gap', (index === 0 ? 0 : 2 + Math.random() * 5).toFixed(1) + 'rem');
+    }
     const im = document.createElement('img');
     im.src = img.src;
     im.alt = img.alt;
@@ -700,20 +748,79 @@ function openViewer(card) {
     im.addEventListener('load', setOrientation, { once:true });
     if(im.complete) setOrientation();
     slide.appendChild(im);
-    viewerTrack.appendChild(slide);
+    return slide;
+  };
+
+  imgs.forEach((img, index) => {
+    const file = filename(img);
+    const group = tridentGroups.find(files => files[0] === file);
+    if(group) {
+      const row = document.createElement('div');
+      row.className = `viewer-group ${group.length === 2 ? 'pair' : 'trio'}`;
+      row.style.setProperty('--board-gap', (index === 0 ? 0 : 2 + Math.random() * 5).toFixed(1) + 'rem');
+      group.forEach(groupFile => {
+        const groupImg = imgs.find(candidate => filename(candidate) === groupFile);
+        if(groupImg) row.appendChild(createSlide(groupImg, index, true));
+      });
+      viewerTrack.appendChild(row);
+      return;
+    }
+    if(groupedFiles.has(file)) return;
+    viewerTrack.appendChild(createSlide(img, index));
   });
   viewer.classList.add('open');
+  viewer.dataset.project = name;
   viewer.scrollTop = 0;
   document.body.style.overflow = 'hidden';
+  if(updateAddress && location.hash !== `#${projectSlug(name)}`) {
+    history.pushState({ project: name }, '', `#${projectSlug(name)}`);
+  }
+  if(viewerRevealObserver) viewerRevealObserver.disconnect();
+  const revealWhenReady = target => {
+    const pendingImages = Array.from(target.querySelectorAll('img')).filter(image => !image.complete);
+    const reveal = () => requestAnimationFrame(() => target.classList.add('in-view'));
+    if(!pendingImages.length) {
+      reveal();
+      return;
+    }
+    let remaining = pendingImages.length;
+    const imageReady = () => {
+      remaining -= 1;
+      if(remaining === 0) reveal();
+    };
+    pendingImages.forEach(image => {
+      image.addEventListener('load', imageReady, { once: true });
+      image.addEventListener('error', imageReady, { once: true });
+    });
+  };
+  viewerRevealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(!entry.isIntersecting) return;
+      revealWhenReady(entry.target);
+      viewerRevealObserver.unobserve(entry.target);
+    });
+  }, { root: viewer, threshold: .2, rootMargin: '0px 0px -18% 0px' });
+  requestAnimationFrame(() => {
+    Array.from(viewerTrack.children).forEach(item => viewerRevealObserver.observe(item));
+  });
 }
 
-function closeViewer() {
+function closeViewer(updateAddress = true) {
+  if(viewerRevealObserver) viewerRevealObserver.disconnect();
   viewer.classList.remove('open');
+  delete viewer.dataset.project;
   viewerTrack.innerHTML = '';
   document.body.style.overflow = '';
+  if(updateAddress && cardFromHash()) {
+    if(history.state && history.state.project) {
+      history.back();
+    } else {
+      history.replaceState(null, '', location.href.split('#')[0]);
+    }
+  }
 }
 
-document.querySelectorAll('.project-card').forEach(card => {
+projectCards().forEach(card => {
   card.style.cursor = 'pointer';
   card.addEventListener('click', () => openViewer(card));
 });
@@ -723,6 +830,19 @@ document.addEventListener('keydown', e => {
   if(!viewer.classList.contains('open')) return;
   if(e.key === 'Escape') closeViewer();
 });
+
+function syncProjectFromAddress() {
+  const card = cardFromHash();
+  if(card) {
+    if(viewer.dataset.project !== card.dataset.project) openViewer(card, false);
+  } else if(viewer.classList.contains('open')) {
+    closeViewer(false);
+  }
+}
+
+window.addEventListener('popstate', syncProjectFromAddress);
+window.addEventListener('hashchange', syncProjectFromAddress);
+syncProjectFromAddress();
 </script>
 </body>
 </html>
