@@ -79,7 +79,7 @@ window.SPACES_GRID_PROJECTS = {
   "Signal": [
     "Spaces as they are grid/Signal /JPEG/34_Signal_027_1.jpg",
     "Spaces as they are grid/Signal /JPEG/34_Signal_063_1.jpg",
-    "Spaces as they are grid/Signal /JPEG/34_Signal_088_1.jpg",
+    "Spaces as they are grid/Signal /JPEG/34_Signal_088_1-no-vent.png",
     "Spaces as they are grid/Signal /JPEG/34_Signal_097.jpg",
     "Spaces as they are grid/Signal /JPEG/34_Signal_098_1.jpg",
     "Spaces as they are grid/Signal /JPEG/34_Signal_101_1.jpg",

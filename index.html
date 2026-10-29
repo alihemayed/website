@@ -732,17 +732,17 @@ const projectHeroes = {
   Angul: { file: '27_Angul_192.jpg', position: '50% 50%', alt: 'A quiet bedroom looking through glass doors towards the pool and courtyard' },
   Hick: { file: '11_Hick_062.jpg', position: '50% 50%', alt: 'Intersecting stair flights with timber treads and a glass balustrade' },
   Harrington: { file: '1_Harrington_240_1.jpg', position: '50% 55%', alt: 'Harrington facade and entrance framed by the front garden' },
-  Signal: { file: '34_Signal_088_1.jpg', position: '60% 50%', alt: 'Soft daylight through sheer curtains illuminating a curved sofa and geometric cabinet' }
+  Signal: { file: '34_Signal_088_1-no-vent.png', position: '60% 50%', alt: 'Soft daylight through sheer curtains illuminating a curved sofa and geometric cabinet' }
 };
 const viewerTrack = document.getElementById('viewer-track');
 let viewerRevealObserver;
 
 function projectHeroSources(name) {
-  const base = `assets/project-heroes/${name.toLowerCase()}`;
-  const widths = name === 'Trident' ? [800, 1112] : [800, 1600, 2400];
+  const base = `assets/project-heroes/${name === 'Signal' ? 'signal-no-vent' : name.toLowerCase()}`;
+  const widths = name === 'Trident' ? [800, 1112] : name === 'Signal' ? [800, 1535] : [800, 1600, 2400];
   const heightWidth = name === 'Trident' || name === 'Hick' ? '66.667vh' : '150vh';
   return {
-    src: `${base}-${name === 'Trident' ? 1112 : 1600}.webp`,
+    src: `${base}-${name === 'Trident' ? 1112 : name === 'Signal' ? 1535 : 1600}.webp`,
     srcset: widths.map(width => `${base}-${width}.webp ${width}w`).join(', '),
     sizes: `(max-width: 600px) 100vw, max(66.667vw, ${heightWidth})`
   };
