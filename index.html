@@ -728,7 +728,7 @@ const projectHeroes = {
   Trident: { file: '16_Trident_123.jpg', position: '50% 50%', alt: 'Sunlight and shadow across sculptural stair balustrades' },
   Kendall: { file: '2A_Kendall_015.jpg', position: '60% 50%', alt: 'Pale timber and curved furniture beneath a high window overlooking the garden' },
   Kernot: { file: 'kit2.jpg', position: '50% 50%', alt: 'Arched pantry opening framed by timber cabinetry, stone and a staircase' },
-  Callistemon: { file: '8_Callistemon_062.jpg', position: '45% 50%', alt: 'A woman walking through a naturally lit living room beside the garden' },
+  Callistemon: { file: '8_Callistemon_062.jpg', asset: 'callistemon-no-vents', widths: [800, 1535], position: '45% 50%', alt: 'A woman walking through a naturally lit living room beside the garden' },
   Angul: { file: '27_Angul_192.jpg', position: '50% 50%', alt: 'A quiet bedroom looking through glass doors towards the pool and courtyard' },
   Hick: { file: '11_Hick_062.jpg', position: '50% 50%', alt: 'Intersecting stair flights with timber treads and a glass balustrade' },
   Harrington: { file: '1_Harrington_240_1.jpg', position: '50% 55%', alt: 'Harrington facade and entrance framed by the front garden' },
@@ -738,11 +738,12 @@ const viewerTrack = document.getElementById('viewer-track');
 let viewerRevealObserver;
 
 function projectHeroSources(name) {
-  const base = `assets/project-heroes/${name === 'Signal' ? 'signal-no-vent' : name.toLowerCase()}`;
-  const widths = name === 'Trident' ? [800, 1112] : name === 'Signal' ? [800, 1535] : [800, 1600, 2400];
+  const config = projectHeroes[name];
+  const base = `assets/project-heroes/${config?.asset || (name === 'Signal' ? 'signal-no-vent' : name.toLowerCase())}`;
+  const widths = config?.widths || (name === 'Trident' ? [800, 1112] : name === 'Signal' ? [800, 1535] : [800, 1600, 2400]);
   const heightWidth = name === 'Trident' || name === 'Hick' ? '66.667vh' : '150vh';
   return {
-    src: `${base}-${name === 'Trident' ? 1112 : name === 'Signal' ? 1535 : 1600}.webp`,
+    src: `${base}-${widths[1]}.webp`,
     srcset: widths.map(width => `${base}-${width}.webp ${width}w`).join(', '),
     sizes: `(max-width: 600px) 100vw, max(66.667vw, ${heightWidth})`
   };
