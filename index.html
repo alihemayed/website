@@ -214,9 +214,10 @@ footer a:hover{color:var(--gold)}
 /* PROJECT VIEWER */
 .project-viewer{position:fixed;inset:0;z-index:200;background:var(--cream);opacity:0;pointer-events:none;overflow-y:auto;transition:opacity .5s ease}
 .project-viewer.open{opacity:1;pointer-events:all}
-.viewer-header{position:relative;display:flex;align-items:center;max-width:1700px;margin:0 auto;padding:5rem 5.5rem 1.4rem 2rem}
-.viewer-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,7vw,7rem);font-weight:400;line-height:1;letter-spacing:.045em;text-transform:uppercase;color:var(--charcoal)}
-.viewer-intro{max-width:1700px;width:100%;margin:0 auto;padding:1.2rem 2rem .5rem}
+.viewer-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);width:100%;height:100vh;height:100svh;overflow:hidden}
+.viewer-header{min-width:0;min-height:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:1.6rem;padding:5rem clamp(1.1rem,2.5vw,4rem)}
+.viewer-title{max-width:100%;font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,3.8vw,5.5rem);font-weight:400;line-height:1;letter-spacing:.025em;text-transform:uppercase;color:var(--charcoal);overflow-wrap:anywhere}
+.viewer-hero-image{display:block;min-width:0;min-height:0;width:100%;height:100%;object-fit:cover;object-position:center}
 .viewer-description{max-width:42rem;font-size:clamp(.95rem,1.2vw,1.08rem);font-weight:300;line-height:1.8;color:var(--mid)}
 .viewer-close{position:fixed;top:1.4rem;right:1.5rem;z-index:203;display:grid;place-items:center;width:44px;height:44px;background:rgba(245,242,238,.94);border:none;border-radius:50%;color:var(--mid);font-size:1.5rem;cursor:pointer;line-height:1;padding:.4rem;transition:color .2s}
 .viewer-close:focus-visible{outline:2px solid var(--charcoal);outline-offset:3px}
@@ -240,16 +241,20 @@ footer a:hover{color:var(--gold)}
 @media(prefers-reduced-motion:reduce){.viewer-slide,.viewer-group{transform:none;filter:none;transition:opacity .45s ease}}
 @media(max-width:900px){
   .project-viewer{background:var(--cream)}
-  .project-viewer .viewer-header{padding:4.5rem 1.1rem 1rem}
   .viewer-close{top:1rem;right:.75rem}
   .viewer-home{top:1rem;left:1.1rem}
-  .viewer-title{font-size:clamp(2.5rem,10vw,5rem);letter-spacing:.025em}
-  .viewer-intro{padding:.6rem 1.1rem 1.5rem}
+  .viewer-title{font-size:clamp(1.8rem,4.2vw,3rem);letter-spacing:.025em}
   .viewer-track{display:block;padding:0 0 1rem}
   .viewer-slide,.viewer-slide.portrait{width:100%;margin:.35rem 0 0}
   .viewer-group,.viewer-group.pair{width:100%;display:block;margin:.35rem 0 0}
   .viewer-group.trio{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.35rem;margin:.35rem 0 0}
   .viewer-group .viewer-slide{margin:.35rem 0 0}
+}
+@media(max-width:600px){
+  .viewer-hero{display:flex;flex-direction:column;height:auto;overflow:visible}
+  .project-viewer .viewer-header{padding:5.5rem 1.1rem 2rem;gap:1rem}
+  .viewer-hero-image{height:auto;max-height:75svh;object-fit:contain}
+  .viewer-title{font-size:clamp(2.5rem,10vw,5rem)}
 }
 </style>
 </head>
@@ -272,7 +277,7 @@ footer a:hover{color:var(--gold)}
     <div class="hslide"><img decoding="async" src="assets/site/image-003-31f87cf20729.jpg" alt="Railway living room"></div>
     <div class="hslide"><img decoding="async" src="assets/site/image-004-32b5b93278ac.jpg" alt="Hero carousel replacement"></div>
     <div class="hslide"><img decoding="async" src="assets/site/image-005-85d1877d18ff.jpg" alt="Green kitchen with brass pendants"></div>
-    <div class="hslide"><img decoding="async" src="assets/site/image-006-6a8a9d7336a3.jpg" alt="Aerial dining table"></div>
+    <div class="hslide"><img decoding="async" src="assets/site/trident-living-hero.jpg" alt="Trident double-height living room with sculptural furniture and a stone fireplace"></div>
     <div class="hslide"><img decoding="async" src="assets/site/image-007-d64fe27a0c48.jpg" alt="Bathroom with marble vanity and fluted glass shower"></div>
   </div>
   <div class="hero-overlay"></div>
@@ -508,11 +513,14 @@ footer a:hover{color:var(--gold)}
 
 <!-- PROJECT VIEWER -->
 <div class="project-viewer" id="project-viewer">
-  <div class="viewer-header">
-    <h2 class="viewer-title" id="viewer-title"></h2>
-    <button class="viewer-close" id="viewer-close" type="button" aria-label="Close project">&#10005;</button>
+  <div class="viewer-hero">
+    <div class="viewer-header">
+      <h2 class="viewer-title" id="viewer-title"></h2>
+      <p class="viewer-description" id="viewer-description"></p>
+    </div>
+    <img class="viewer-hero-image" id="viewer-hero-image" alt="" decoding="async" fetchpriority="high">
   </div>
-  <div class="viewer-intro"><p class="viewer-description" id="viewer-description"></p></div>
+  <button class="viewer-close" id="viewer-close" type="button" aria-label="Close project">&#10005;</button>
   <div class="viewer-track" id="viewer-track"></div>
   <button class="viewer-home" id="viewer-home" type="button" aria-label="Back to home" title="Back to home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button>
 </div>
@@ -707,6 +715,7 @@ document.querySelectorAll('.project-card').forEach(card => {
 const viewer = document.getElementById('project-viewer');
 const viewerTitle = document.getElementById('viewer-title');
 const viewerDescription = document.getElementById('viewer-description');
+const viewerHeroImage = document.getElementById('viewer-hero-image');
 const projectDescriptions = {
   Webster: 'Soft curves and warm timber frame a dialogue between indoors and out.',
   Trident: 'Light and shadow trace sculptural stairs and quiet thresholds.',
@@ -717,6 +726,18 @@ const projectDescriptions = {
   Hick: 'Timber, glass and intersecting lines reveal the geometry of the home.',
   Harrington: 'A considered portrait of home, from the facade to the details within.',
   Signal: 'An exploration of the home through light, perspective and detail.'
+};
+// Project opening photographs are curated separately from the homepage covers.
+const projectHeroes = {
+  Webster: { file: '18_Webster_256.jpg', position: '50% 55%', alt: 'Curved living room furniture and timber flooring opening onto the courtyard' },
+  Trident: { file: '16_Trident_123.jpg', position: '50% 50%', alt: 'Sunlight and shadow across sculptural stair balustrades' },
+  Kendall: { file: '2A_Kendall_015.jpg', position: '60% 50%', alt: 'Pale timber and curved furniture beneath a high window overlooking the garden' },
+  Kernot: { file: 'kit2.jpg', position: '50% 50%', alt: 'Arched pantry opening framed by timber cabinetry, stone and a staircase' },
+  Callistemon: { file: '8_Callistemon_062.jpg', position: '45% 50%', alt: 'A woman walking through a naturally lit living room beside the garden' },
+  Angul: { file: '27_Angul_192.jpg', position: '50% 50%', alt: 'A quiet bedroom looking through glass doors towards the pool and courtyard' },
+  Hick: { file: '11_Hick_062.jpg', position: '50% 50%', alt: 'Intersecting stair flights with timber treads and a glass balustrade' },
+  Harrington: { file: '1_Harrington_240_1.jpg', position: '50% 55%', alt: 'Harrington facade and entrance framed by the front garden' },
+  Signal: { file: '34_Signal_088_1.jpg', position: '60% 50%', alt: 'Soft daylight through sheer curtains illuminating a curved sofa and geometric cabinet' }
 };
 const viewerTrack = document.getElementById('viewer-track');
 const viewerClose = document.getElementById('viewer-close');
@@ -750,7 +771,17 @@ function openViewer(card, updateAddress = true) {
   const alignments = ['flex-start', 'center', 'flex-end'];
   viewerTitle.textContent = name;
   viewerDescription.textContent = projectDescriptions[name] || '';
-  viewerDescription.parentElement.hidden = !projectDescriptions[name];
+  viewerDescription.hidden = !projectDescriptions[name];
+  const heroConfig = projectHeroes[name];
+  const hero = imgs.find(img => decodeURIComponent(new URL(img.src).pathname).endsWith('/' + heroConfig?.file)) || imgs[0];
+  if(hero) {
+    viewerHeroImage.src = hero.src;
+    viewerHeroImage.alt = heroConfig?.alt || `${name} — project opening photograph`;
+    viewerHeroImage.style.objectPosition = heroConfig?.position || 'center';
+  } else {
+    viewerHeroImage.removeAttribute('src');
+    viewerHeroImage.alt = '';
+  }
   viewerTrack.innerHTML = '';
   const tridentGroups = name === 'Trident' ? [
     ['16_Trident_025.jpg', '16_Trident_167_2.jpg'],
@@ -758,6 +789,8 @@ function openViewer(card, updateAddress = true) {
   ] : [];
   const groupedFiles = new Set(tridentGroups.flat());
   const filename = img => decodeURIComponent(new URL(img.src).pathname.split('/').pop());
+  // Keep the staircase triptych complete when one of its images is the hero.
+  imgs = imgs.filter(img => img !== hero || groupedFiles.has(filename(img)));
 
   const createSlide = (img, index, grouped = false) => {
     const slide = document.createElement('div');
@@ -840,6 +873,7 @@ function closeViewer(updateAddress = true) {
   delete viewer.dataset.project;
   viewerTrack.innerHTML = '';
   document.body.style.overflow = '';
+  viewerHeroImage.removeAttribute('src');
   if(updateAddress && cardFromHash()) {
     if(history.state && history.state.project) {
       history.back();
