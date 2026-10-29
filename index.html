@@ -272,7 +272,7 @@ footer a:hover{color:var(--gold)}
     <div class="hslide active"><img decoding="async" fetchpriority="high" src="assets/site/image-002-8f45ffd85f51.jpg" alt="Kernot architectural exterior"></div>
     <div class="hslide"><img decoding="async" src="assets/site/image-003-31f87cf20729.jpg" alt="Railway living room"></div>
     <div class="hslide"><img decoding="async" src="assets/site/image-004-32b5b93278ac.jpg" alt="Hero carousel replacement"></div>
-    <div class="hslide"><img decoding="async" src="assets/site/image-005-85d1877d18ff.jpg" alt="Green kitchen with brass pendants"></div>
+    <div class="hslide"><img decoding="async" src="assets/site/trident-kitchen-hero.jpg" alt="Trident kitchen with a sculptural marble island and pale timber cabinetry"></div>
     <div class="hslide"><img decoding="async" src="assets/site/trident-living-hero.jpg" alt="Trident double-height living room with sculptural furniture and a stone fireplace"></div>
     <div class="hslide"><img decoding="async" src="assets/site/image-007-d64fe27a0c48.jpg" alt="Bathroom with marble vanity and fluted glass shower"></div>
   </div>
@@ -737,6 +737,29 @@ const projectHeroes = {
 const viewerTrack = document.getElementById('viewer-track');
 let viewerRevealObserver;
 
+function projectHeroSources(name) {
+  const base = `assets/project-heroes/${name.toLowerCase()}`;
+  const widths = name === 'Trident' ? [800, 1112] : [800, 1600, 2400];
+  const heightWidth = name === 'Trident' || name === 'Hick' ? '66.667vh' : '150vh';
+  return {
+    src: `${base}-${name === 'Trident' ? 1112 : 1600}.webp`,
+    srcset: widths.map(width => `${base}-${width}.webp ${width}w`).join(', '),
+    sizes: `(max-width: 600px) 100vw, max(66.667vw, ${heightWidth})`
+  };
+}
+
+const warmedProjectHeroes = new Map();
+function warmProjectHero(name) {
+  if(!projectHeroes[name] || warmedProjectHeroes.has(name) || navigator.connection?.saveData) return;
+  const sources = projectHeroSources(name);
+  const image = new Image();
+  image.decoding = 'async';
+  image.sizes = sources.sizes;
+  image.srcset = sources.srcset;
+  image.src = sources.src;
+  warmedProjectHeroes.set(name, image);
+}
+
 const projectSlug = name => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const projectCards = () => Array.from(document.querySelectorAll('.project-card'));
 const cardFromHash = () => {
@@ -769,10 +792,14 @@ function openViewer(card, updateAddress = true) {
   const heroConfig = projectHeroes[name];
   const hero = imgs.find(img => decodeURIComponent(new URL(img.src).pathname).endsWith('/' + heroConfig?.file)) || imgs[0];
   if(hero) {
-    viewerHeroImage.src = hero.src;
+    const sources = projectHeroSources(name);
+    viewerHeroImage.sizes = sources.sizes;
+    viewerHeroImage.srcset = sources.srcset;
+    viewerHeroImage.src = sources.src;
     viewerHeroImage.alt = heroConfig?.alt || `${name} — project opening photograph`;
     viewerHeroImage.style.objectPosition = heroConfig?.position || 'center';
   } else {
+    viewerHeroImage.removeAttribute('srcset');
     viewerHeroImage.removeAttribute('src');
     viewerHeroImage.alt = '';
   }
@@ -867,6 +894,7 @@ function closeViewer(updateAddress = true) {
   delete viewer.dataset.project;
   viewerTrack.innerHTML = '';
   document.body.style.overflow = '';
+  viewerHeroImage.removeAttribute('srcset');
   viewerHeroImage.removeAttribute('src');
   if(updateAddress && cardFromHash()) {
     if(history.state && history.state.project) {
@@ -879,6 +907,9 @@ function closeViewer(updateAddress = true) {
 
 projectCards().forEach(card => {
   card.style.cursor = 'pointer';
+  card.addEventListener('pointerenter', () => warmProjectHero(card.dataset.project), { once: true });
+  card.addEventListener('focusin', () => warmProjectHero(card.dataset.project), { once: true });
+  card.addEventListener('pointerdown', () => warmProjectHero(card.dataset.project), { once: true, passive: true });
   card.addEventListener('click', () => openViewer(card));
 });
 
