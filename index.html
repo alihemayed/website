@@ -117,6 +117,9 @@ section{padding:7rem 3rem}
 .contact-inner h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.8rem);font-weight:300;line-height:1.1;margin-bottom:1rem}
 .contact-inner h2 em{font-style:italic}
 .contact-inner>p{color:var(--mid);font-size:.9rem;line-height:1.8;margin-bottom:3rem}
+.contact-email{color:var(--charcoal);font-weight:400;text-decoration:none;white-space:nowrap}
+.contact-email:hover{color:var(--mid)}
+.contact-email:focus-visible{outline:2px solid var(--charcoal);outline-offset:4px}
 .contact-form{display:flex;flex-direction:column;gap:1.1rem;text-align:left}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
 .contact-form input,.contact-form textarea{
@@ -483,7 +486,7 @@ footer a:hover{color:var(--gold)}
   <div class="contact-inner">
     <p class="section-label">Get in Touch</p>
     <h2>Let's work<br><em>together</em></h2>
-    <p>Whether it's a fast-paced listing or a considered editorial shoot, get in touch to discuss your project<br>or email us at: <strong>hello@alihemayed.com.au</strong></p>
+    <p>Whether it's a fast-paced listing or a considered editorial shoot, get in touch to discuss your project<br>or email us at: <a class="contact-email" href="mailto:hello@alihemayed.com.au">hello@alihemayed.com.au</a></p>
     <form class="contact-form" id="contact-form" name="contact" method="POST" action="/.netlify/functions/contact">
       <p hidden>
         <label>Don't fill this out if you're human: <input name="bot-field"></label>
