@@ -94,7 +94,7 @@ window.SPACES_GRID_PROJECTS = {
     "Spaces as they are grid/Kookaburra/15_Kookaburra_094.jpg",
     "Spaces as they are grid/Kookaburra/15_Kookaburra_123.jpg",
     "Spaces as they are grid/Kookaburra/15_Kookaburra_161.jpg",
-    "Spaces as they are grid/Kookaburra/15_Kookaburra_164.jpg",
+    "Spaces as they are grid/Kookaburra/15_Kookaburra_164-updated.jpg",
     "Spaces as they are grid/Kookaburra/15_Kookaburra_168.jpg",
     "Spaces as they are grid/Kookaburra/15_Kookaburra_175.jpg",
     "Spaces as they are grid/Kookaburra/15_Kookaburra_203.jpg",
