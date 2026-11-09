@@ -87,16 +87,19 @@ window.SPACES_GRID_PROJECTS = {
     "Spaces as they are grid/Signal /JPEG/34_Signal_133_1.jpg",
     "Spaces as they are grid/Signal /JPEG/34_Signal_166_1.jpg"
   ],
-  "Harrington": [
-    "Spaces as they are grid/Harrington/1_Harrington_055_1.jpg",
-    "Spaces as they are grid/Harrington/1_Harrington_102_1.jpg",
-    "Spaces as they are grid/Harrington/1_Harrington_118_1.jpg",
-    "Spaces as they are grid/Harrington/1_Harrington_162_1_1.jpg",
-    "Spaces as they are grid/Harrington/1_Harrington_180_1.jpg",
-    "Spaces as they are grid/Harrington/1_Harrington_197_1.jpg",
-    "Spaces as they are grid/Harrington/1_Harrington_240_1.jpg",
-    "Spaces as they are grid/Harrington/1_Harrington_313_web.jpg",
-    "Spaces as they are grid/Harrington/1_Harrington_378_1.jpg"
+  "Kookaburra": [
+    "Spaces as they are grid/Kookaburra/15_Kookaburra_292.jpg",
+    "Spaces as they are grid/Kookaburra/15_Kookaburra_042.jpg",
+    "Spaces as they are grid/Kookaburra/15_Kookaburra_045.jpg",
+    "Spaces as they are grid/Kookaburra/15_Kookaburra_094.jpg",
+    "Spaces as they are grid/Kookaburra/15_Kookaburra_123.jpg",
+    "Spaces as they are grid/Kookaburra/15_Kookaburra_161.jpg",
+    "Spaces as they are grid/Kookaburra/15_Kookaburra_164.jpg",
+    "Spaces as they are grid/Kookaburra/15_Kookaburra_168.jpg",
+    "Spaces as they are grid/Kookaburra/15_Kookaburra_175.jpg",
+    "Spaces as they are grid/Kookaburra/15_Kookaburra_203.jpg",
+    "Spaces as they are grid/Kookaburra/15_Kookaburra_267.jpg",
+    "Spaces as they are grid/Kookaburra/15_Kookaburra_275.jpg"
   ],
   "Hick": [
     "Spaces as they are grid/Hick/11_Hick_001.jpg",

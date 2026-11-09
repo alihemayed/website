@@ -413,19 +413,6 @@ footer a:hover{color:var(--gold)}
   <div class="proj-overlay"><span class="proj-overlay-title">Hakea</span></div>
 </div>
 
-<div class="project-card" data-project="Harrington">
-  <div class="pslider">
-    <div class="ps active"><img decoding="async" src="Harrington/1.jpg" alt="Harrington" loading="lazy"></div>
-    <div class="ps"><img decoding="async" src="Harrington/1c.jpg" alt="Harrington" loading="lazy"></div>
-    <div class="ps"><img decoding="async" src="Harrington/2.jpg" alt="Harrington" loading="lazy"></div>
-    <div class="ps"><img decoding="async" src="Harrington/3.jpg" alt="Harrington" loading="lazy"></div>
-    <div class="ps"><img decoding="async" src="Harrington/4.jpg" alt="Harrington" loading="lazy"></div>
-    <div class="ps"><img decoding="async" src="Harrington/5.jpg" alt="Harrington" loading="lazy"></div>
-    <div class="ps"><img decoding="async" src="Harrington/6.jpg" alt="Harrington" loading="lazy"></div>
-  </div>
-  <div class="proj-overlay"><span class="proj-overlay-title">Harrington</span></div>
-</div>
-
 </template>
 </div>
 </section>
@@ -600,7 +587,7 @@ if(projectGrid && window.SPACES_GRID_PROJECTS) {
   const projectCovers = {
     Angul: 'Spaces as they are grid/Angul/27_Angul_265.jpg',
         Callistemon: 'Spaces as they are grid/Callistemon/8_Callistemon_062.jpg',
-    Harrington: 'Spaces as they are grid/Harrington/1_Harrington_240_1.jpg',
+    Kookaburra: 'Spaces as they are grid/Kookaburra/15_Kookaburra_292.jpg',
     Hick: 'Spaces as they are grid/Hick/11_Hick_034.jpg',
     Kendall: 'Spaces as they are grid/Kendall/2A_Kendall_015.jpg',
     Kernot: 'Spaces as they are grid/Kernot/front.jpeg',
@@ -611,7 +598,7 @@ if(projectGrid && window.SPACES_GRID_PROJECTS) {
   const projectCoverPreviews = {
     Angul: 'assets/project-covers/angul.jpg',
     Callistemon: 'assets/project-covers/callistemon-no-vents.jpg',
-    Harrington: 'assets/project-covers/harrington.jpg',
+    Kookaburra: 'assets/project-covers/kookaburra-facade.jpg',
     Hick: 'assets/project-covers/hick.jpg',
     Kendall: 'assets/project-covers/kendall.jpg',
     Kernot: 'assets/project-covers/kernot.jpg',
@@ -622,7 +609,7 @@ if(projectGrid && window.SPACES_GRID_PROJECTS) {
   const projectOrder = [
     'Kernot', 'Kendall', 'Webster',
     'Signal', 'Callistemon', 'Angul',
-    'Trident', 'Hick', 'Harrington'
+    'Trident', 'Hick', 'Kookaburra'
   ];
 
   projectOrder.forEach(name => {
@@ -722,7 +709,7 @@ const projectDescriptions = {
   Callistemon: 'Natural light and the presence of everyday life give each space its character.',
   Angul: 'Views unfold from quiet interiors to the pool and courtyard beyond.',
   Hick: 'Timber, glass and intersecting lines reveal the geometry of the home.',
-  Harrington: 'A considered portrait of home, from the facade to the details within.',
+  Kookaburra: 'Glazed openings connect calm interiors with sheltered terraces and garden views.',
   Signal: 'An exploration of the home through light, perspective and detail.'
 };
 // Project opening photographs are curated separately from the homepage covers.
@@ -734,7 +721,7 @@ const projectHeroes = {
   Callistemon: { file: '8_Callistemon_062.jpg', asset: 'callistemon-no-vents', widths: [800, 1535], position: '45% 50%', alt: 'A woman walking through a naturally lit living room beside the garden' },
   Angul: { file: '27_Angul_265.jpg', asset: 'angul-pool', position: '50% 50%', alt: 'Angul pool and courtyard framed by the home and covered terrace' },
   Hick: { file: '11_Hick_062.jpg', position: '50% 50%', alt: 'Intersecting stair flights with timber treads and a glass balustrade' },
-  Harrington: { file: '1_Harrington_240_1.jpg', position: '50% 55%', alt: 'Harrington facade and entrance framed by the front garden' },
+  Kookaburra: { file: '15_Kookaburra_164.jpg', position: '55% 50%', alt: 'A sheltered terrace opening through glass walls into the living room and garden' },
   Signal: { file: '34_Signal_088_1-no-vent.png', position: '60% 50%', alt: 'Soft daylight through sheer curtains illuminating a curved sofa and geometric cabinet' }
 };
 const viewerTrack = document.getElementById('viewer-track');
@@ -780,13 +767,6 @@ function openViewer(card, updateAddress = true) {
   if(name === 'Trident') {
     const facade = imgs.find(img => decodeURIComponent(img.src).includes('16_Trident_253.jpg'));
     if(facade) imgs = [facade, ...imgs.filter(img => img !== facade)];
-  }
-  if(name === 'Harrington') {
-    const exteriorFiles = ['1_Harrington_240_1.jpg', '1_Harrington_313_web.jpg', '1_Harrington_378_1.jpg'];
-    const exteriors = exteriorFiles
-      .map(file => imgs.find(img => decodeURIComponent(img.src).includes(file)))
-      .filter(Boolean);
-    imgs = [...exteriors, ...imgs.filter(img => !exteriors.includes(img))];
   }
   const widths = [68, 74, 80, 86, 92];
   const alignments = ['flex-start', 'center', 'flex-end'];
