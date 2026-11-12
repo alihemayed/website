@@ -116,7 +116,6 @@ window.SPACES_GRID_PROJECTS = {
     "Spaces as they are grid/Angul/27_Angul_024.jpg",
     "Spaces as they are grid/Angul/27_Angul_027.jpg",
     "Spaces as they are grid/Angul/27_Angul_083.jpg",
-    "Spaces as they are grid/Angul/27_Angul_105.jpg",
     "Spaces as they are grid/Angul/27_Angul_113.jpg",
     "Spaces as they are grid/Angul/27_Angul_128.jpg",
     "Spaces as they are grid/Angul/27_Angul_188.jpg",
